@@ -37,8 +37,10 @@ public class ProductsEndpoint
             _dbContext.Products.Add(product);
             await _dbContext.SaveChangesAsync();
 
-            var response = req.CreateResponse(HttpStatusCode.Created);
-            response.Headers.Add("Location", $"/products/{product.Id}");
+            var response = req.CreateResponse();
+            response.Headers.Add("Location", $"{req.Url.AbsoluteUri.ToString()}/{product.Id}");
+            await response.WriteAsJsonAsync(product, HttpStatusCode.Created);
+
             return response;
         }
         if (req.Method == "GET")

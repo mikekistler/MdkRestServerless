@@ -1,6 +1,5 @@
 @MdkRestServerless_HostAddress = http://localhost:7071
 
-
 ### Get all products
 
 GET {{MdkRestServerless_HostAddress}}/api/products
@@ -11,12 +10,23 @@ POST {{MdkRestServerless_HostAddress}}/api/products
 Content-Type: application/json
 
 {
-    "Name": "Product 1",
-    "Price": 100.00
+    "Name": "Product 7",
+    "Price": 99.95
 }
 
-###
+### Get a product
 
-GET {{MdkRestServerless_HostAddress}}/api/v1/catalog/items/type/1/brand/2
+GET {{MdkRestServerless_HostAddress}}/api/products/7
 
-###
+### Update a product
+
+PATCH {{MdkRestServerless_HostAddress}}/api/products/7
+Content-Type: application/json
+
+{
+    "Price": 95.00
+}
+
+### Delete a product
+
+DELETE {{MdkRestServerless_HostAddress}}/api/products/7

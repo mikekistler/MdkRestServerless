@@ -33,7 +33,7 @@ namespace MdkRestServerless
                     return req.CreateResponse(HttpStatusCode.NotFound);
                 }
                 var response = req.CreateResponse(HttpStatusCode.OK);
-                response.Headers.Add("Content-Type", "application/json; charset=utf-8");
+                // response.Headers.Add("Content-Type", "application/json; charset=utf-8");
                 await response.WriteAsJsonAsync(product);
 
                 return response;
@@ -47,17 +47,25 @@ namespace MdkRestServerless
                 }
                 // deserialize the request body into a Product object with System.Text.Json
                 string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-                var productPatch = JsonSerializer.Deserialize<JsonObject>(requestBody);
+                var productPatch = JsonSerializer.Deserialize<JsonNode>(requestBody);
                 if (productPatch == null)
                 {
                     _logger.LogError("Invalid product data.");
                     return req.CreateResponse(HttpStatusCode.BadRequest);
                 }
                 // update the product with the patch data
+                if (productPatch["Name"]?.GetValue<string>() is string name)
+                {
+                    product.Name = name;
+                }
+                if (productPatch["Price"]?.GetValue<decimal>() is decimal price)
+                {
+                    product.Price = price;
+                }
                 await _dbContext.SaveChangesAsync();
 
                 var response = req.CreateResponse(HttpStatusCode.OK);
-                response.Headers.Add("Content-Type", "application/json; charset=utf-8");
+                // response.Headers.Add("Content-Type", "application/json; charset=utf-8");
                 await response.WriteAsJsonAsync(product);
 
                 return response;
