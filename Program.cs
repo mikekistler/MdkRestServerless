@@ -9,9 +9,13 @@ var builder = new HostBuilder()
 
 builder.ConfigureServices(services =>
 {
-    var keyVaultUrl = new Uri(Environment.GetEnvironmentVariable("keyVaultUrl") ?? "");
-    var secretClient = new SecretClient(keyVaultUrl, new DefaultAzureCredential());
-    var connectionString = secretClient.GetSecret("ConnectionStrings.ProductsDb").Value.Value;
+    var keyVaultUrl = Environment.GetEnvironmentVariable("KeyVaultUrl");
+    if (keyVaultUrl == null)
+    {
+        throw new Exception("keyVaultUrl environment variable not set.");
+    }
+    var secretClient = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+    var connectionString = secretClient.GetSecret("ProductsDbConnectionString").Value.Value;
     services.AddDbContext<AppDbContext>(options =>
     {
         options.UseSqlServer(connectionString);
@@ -21,3 +25,4 @@ builder.ConfigureServices(services =>
 var host = builder.Build();
 
 host.Run();
+

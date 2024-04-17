@@ -1,0 +1,22 @@
+@MdkRestServerless_HostAddress = http://localhost:7071
+
+
+### Get all products
+
+GET {{MdkRestServerless_HostAddress}}/api/products
+
+### Create a product
+
+POST {{MdkRestServerless_HostAddress}}/api/products
+Content-Type: application/json
+
+{
+    "Name": "Product 1",
+    "Price": 100.00
+}
+
+###
+
+GET {{MdkRestServerless_HostAddress}}/api/v1/catalog/items/type/1/brand/2
+
+###

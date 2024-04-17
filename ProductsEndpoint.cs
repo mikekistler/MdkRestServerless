@@ -45,7 +45,7 @@ public class ProductsEndpoint
         {
             var products = await _dbContext.Products.ToArrayAsync<Product>();
             var response = req.CreateResponse(HttpStatusCode.OK);
-            response.Headers.Add("Content-Type", "application/json; charset=utf-8");
+            // response.Headers.Add("Content-Type", "application/json; charset=utf-8");
             await response.WriteAsJsonAsync(products);
             return response;
         }
