@@ -12,7 +12,7 @@ builder.ConfigureServices(services =>
     var keyVaultUrl = Environment.GetEnvironmentVariable("KeyVaultUrl");
     if (keyVaultUrl == null)
     {
-        throw new Exception("keyVaultUrl environment variable not set.");
+        throw new Exception("KeyVaultUrl environment variable not set.");
     }
     var secretClient = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
     var connectionString = secretClient.GetSecret("ProductsDbConnectionString").Value.Value;

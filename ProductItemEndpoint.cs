@@ -33,7 +33,6 @@ namespace MdkRestServerless
                     return req.CreateResponse(HttpStatusCode.NotFound);
                 }
                 var response = req.CreateResponse(HttpStatusCode.OK);
-                // response.Headers.Add("Content-Type", "application/json; charset=utf-8");
                 await response.WriteAsJsonAsync(product);
 
                 return response;
@@ -65,7 +64,6 @@ namespace MdkRestServerless
                 await _dbContext.SaveChangesAsync();
 
                 var response = req.CreateResponse(HttpStatusCode.OK);
-                // response.Headers.Add("Content-Type", "application/json; charset=utf-8");
                 await response.WriteAsJsonAsync(product);
 
                 return response;

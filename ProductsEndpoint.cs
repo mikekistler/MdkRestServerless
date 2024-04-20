@@ -20,9 +20,9 @@ public class ProductsEndpoint
 
     [Function("ProductsEndpoint")]
     public async Task<HttpResponseData> Run(
-        [HttpTrigger(AuthorizationLevel.User, "get", "post", Route ="products")] HttpRequestData req)
+        [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route ="products")] HttpRequestData req)
     {
-        _logger.LogInformation($"ProductsEndpoint function processed a ${req.Method} request.");
+        _logger.LogInformation($"ProductsEndpoint function processed a {req.Method} request.");
 
         if (req.Method == "POST")
         {
@@ -47,7 +47,6 @@ public class ProductsEndpoint
         {
             var products = await _dbContext.Products.ToArrayAsync<Product>();
             var response = req.CreateResponse(HttpStatusCode.OK);
-            // response.Headers.Add("Content-Type", "application/json; charset=utf-8");
             await response.WriteAsJsonAsync(products);
             return response;
         }
